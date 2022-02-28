@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<vehicles>
+  <vehicle name="Truck 8745">
+    <engine>
+      <power>30</power>
+      <volume>1.8</volume>
+      <type>Truck Type burrr</type>
+      <serialNumber>487VDS87</serialNumber>
+    </engine>
+    <chassis>
+      <wheelsNumber>2</wheelsNumber>
+      <number>7845</number>
+      <permissibleLoad>2500</permissibleLoad>
+    </chassis>
+    <transmission>
+      <type>Transmission Type Truc</type>
+      <numberOfGears>4</numberOfGears>
+      <manufacturer>TheBestTransmissionsInTheCountry</manufacturer>
+    </transmission>
+  </vehicle>
+  <vehicle name="Scooter 6485">
+    <engine>
+      <power>20</power>
+      <volume>2.5</volume>
+      <type>Scooter Type scoo</type>
+      <serialNumber>894LOD52</serialNumber>
+    </engine>
+    <chassis>
+      <wheelsNumber>8</wheelsNumber>
+      <number>2451</number>
+      <permissibleLoad>4000</permissibleLoad>
+    </chassis>
+    <transmission>
+      <type>Transmission Type Scoot</type>
+      <numberOfGears>16</numberOfGears>
+      <manufacturer>TheBestTransmissionsInTheUniverse</manufacturer>
+    </transmission>
+  </vehicle>
+  <vehicle name="Truck 7415">
+    <engine>
+      <power>37</power>
+      <volume>4</volume>
+      <type>Truck Type burrr</type>
+      <serialNumber>154MDS97</serialNumber>
+    </engine>
+    <chassis>
+      <wheelsNumber>2</wheelsNumber>
+      <number>7465</number>
+      <permissibleLoad>1800</permissibleLoad>
+    </chassis>
+    <transmission>
+      <type>Transmission Type Truc</type>
+      <numberOfGears>4</numberOfGears>
+      <manufacturer>TheBestTransmissionsInTheCountry</manufacturer>
+    </transmission>
+  </vehicle>
+</vehicles>

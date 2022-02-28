@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<vehicles>
+  <vehicle name="Truck 8745">
+    <engine>
+      <power>30</power>
+      <volume>1.8</volume>
+      <type>Truck Type burrr</type>
+      <serialNumber>487VDS87</serialNumber>
+    </engine>
+  </vehicle>
+  <vehicle name="Bus 9631">
+    <engine>
+      <power>15</power>
+      <volume>1.2</volume>
+      <type>Bus Type boos</type>
+      <serialNumber>576MKS89</serialNumber>
+    </engine>
+  </vehicle>
+  <vehicle name="Truck 7415">
+    <engine>
+      <power>37</power>
+      <volume>4</volume>
+      <type>Truck Type burrr</type>
+      <serialNumber>154MDS97</serialNumber>
+    </engine>
+  </vehicle>
+  <vehicle name="Bus 9856">
+    <engine>
+      <power>19</power>
+      <volume>1.5</volume>
+      <type>Bus Type boos</type>
+      <serialNumber>845MLS79</serialNumber>
+    </engine>
+  </vehicle>
+</vehicles>
