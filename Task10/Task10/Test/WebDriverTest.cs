@@ -35,7 +35,6 @@ namespace Task10
         [Test]
         public void LoginWithCorrectLoginPasswordTest()
         {
-            Driver.DriverInstance.GetInstance().Manage().Timeouts().ImplicitWait.Add(TimeSpan.FromSeconds(30));
             _steps.LoginGmail(new Model.User(Data.GmailUsername, Data.GmailPassword));
             /*
             _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);

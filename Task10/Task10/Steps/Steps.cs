@@ -23,8 +23,8 @@ namespace Task10.Steps
         {
             Pages.GoogleLoginPage loginPage = new Pages.GoogleLoginPage(_driver);
             loginPage.OpenPage();
-            loginPage.InputLogin(user);
-            loginPage.InputPassword(user);
+            loginPage.InputLogin(user.Username);
+            loginPage.InputPassword(user.Password);
         }
     }
 }

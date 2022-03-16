@@ -33,19 +33,19 @@ namespace Task10.Pages
             Console.WriteLine("Login Page opened");
         }
 
-        public void InputLogin(Model.User user)
+        public void InputLogin(string username)
         {
             IWebElement _inputLogin = _driver.FindElement(By.XPath("//input[@id='identifierId']"));
-            _inputLogin.SendKeys(user.Username);
+            _inputLogin.SendKeys(username);
 
             IWebElement _identifierNext = _driver.FindElement(By.XPath("//div[@id='identifierNext']"));
             _identifierNext.Click();
         }
 
-        public void InputPassword(Model.User user)
+        public void InputPassword(string password)
         {
             IWebElement _inputPassword = _driver.FindElement(By.XPath("//input[@name='password']"));
-            _inputPassword.SendKeys(user.Password);
+            _inputPassword.SendKeys(password);
 
             IWebElement _passwordNext = _driver.FindElement(By.XPath("//div[@id='passwordNext']"));
             _passwordNext.Click();
