@@ -8,10 +8,6 @@ namespace Task6.Exceptions
     [Serializable]
     public class AddException : Exception
     {
-        public AddException()
-        {
-        }
-
         public AddException(string message) : base(message)
         {
         }

@@ -8,10 +8,6 @@ namespace Task6.Exceptions
     [Serializable]
     public class GetAutoByParameterException : Exception
     {
-        public GetAutoByParameterException()
-        {
-        }
-
         public GetAutoByParameterException(string message) : base(message)
         {
         }

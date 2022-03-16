@@ -7,24 +7,37 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
+using Task10.Properties;
 
 namespace Task10
 {
     public class WebDriverTest
     {
+        private Steps.Steps _steps = new Steps.Steps();
         private IWebDriver _driver;
 
         [SetUp]
-        public void StartBrowser()
+        public void Init()
         {
-            _driver = new ChromeDriver();
+            _steps.InitBrowser();
 
-            _driver.Manage().Window.Maximize();
+            //_driver = new ChromeDriver();
+            //_driver.Manage().Window.Maximize();
         }
-        
+
+        [TearDown]
+        public void CleanUp()
+        {
+            _steps.CloseBrowser(); 
+            //_driver.Quit();
+        }
+
         [Test]
         public void LoginWithCorrectLoginPasswordTest()
         {
+            Driver.DriverInstance.GetInstance().Manage().Timeouts().ImplicitWait.Add(TimeSpan.FromSeconds(30));
+            _steps.LoginGmail(new Model.User(Data.GmailUsername, Data.GmailPassword));
+            /*
             _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
 
             _driver.Navigate().GoToUrl("https://gmail.com/");
@@ -38,6 +51,7 @@ namespace Task10
             password.SendKeys("tTXj5huGK5mLvFQJ");
 
             _driver.FindElement(By.XPath("//div[@id='passwordNext']")).Click();
+            */
         }
         
         [Test]
@@ -219,12 +233,6 @@ namespace Task10
             name = _driver.FindElements(By.XPath("//input[@type='text']"));
 
             Assert.AreEqual(name[1].GetAttribute("value"), changeToName);
-        }
-
-        [TearDown]
-        public void CloseBrowser()
-        {
-            _driver.Quit();
         }
     }
 }

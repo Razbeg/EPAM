@@ -8,10 +8,6 @@ namespace Task6.Exceptions
     [Serializable]
     public class RemoveAutoException : Exception
     {
-        public RemoveAutoException()
-        {
-        }
-
         public RemoveAutoException(string message) : base(message)
         {
         }

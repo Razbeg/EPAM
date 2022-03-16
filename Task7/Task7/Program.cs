@@ -1,23 +1,34 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Task7
 {
+    public enum Inputs
+    {
+        Brand,
+        Model,
+        Quantity,
+        CostOfOneUnit
+    }
+
     public class Program
     {
+        private static Dictionary<Inputs, string> _inputs = new Dictionary<Inputs, string>();
+
         private static void Main(string[] args)
         {
             Console.WriteLine("Welcome to the Car System!");
             Console.WriteLine("First of all, you must enter at least one car, to do so, enter: Brand, Model, Quantity and Cost of one unit.");
             Console.WriteLine();
 
-            string[] inputTexts = { "Brand", "Model", "Quantity", "Cost of one unit" };
+            InitializeInputs();
 
             while (true)
             {
                 string[] inputs = new string[4];
-                for (int i = 0; i < inputTexts.Length; i++)
+                for (int i = 0; i < _inputs.Count; i++)
                 {
-                    Console.Write(inputTexts[i] + ": ");
+                    Console.Write(_inputs[i] + ": ");
                     inputs[i] = Console.ReadLine();
                 }
 
@@ -95,6 +106,14 @@ namespace Task7
             }
 
             Console.WriteLine("Bye!");
+        }
+
+        private static void InitializeInputs()
+        {
+            _inputs.Add(Inputs.Brand, "Brand");
+            _inputs.Add(Inputs.Model, "Model");
+            _inputs.Add(Inputs.Quantity, "Quantity");
+            _inputs.Add(Inputs.CostOfOneUnit, "Cost of one unit");
         }
     }
 }
