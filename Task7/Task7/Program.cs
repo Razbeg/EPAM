@@ -13,7 +13,7 @@ namespace Task7
 
     public class Program
     {
-        private static Dictionary<Inputs, string> _inputs = new Dictionary<Inputs, string>();
+        private static Dictionary<Inputs, string> _inputTexts = new Dictionary<Inputs, string>();
 
         private static void Main(string[] args)
         {
@@ -26,9 +26,9 @@ namespace Task7
             while (true)
             {
                 string[] inputs = new string[4];
-                for (int i = 0; i < _inputs.Count; i++)
+                for (int i = 0; i < _inputTexts.Count; i++)
                 {
-                    Console.Write(_inputs[i] + ": ");
+                    Console.Write(_inputTexts[(Inputs)i] + ": ");
                     inputs[i] = Console.ReadLine();
                 }
 
@@ -36,7 +36,7 @@ namespace Task7
                 while (!int.TryParse(inputs[2], out quantity))
                 {
                     Console.WriteLine("Wrong entered Quantity! Re-enter again!");
-                    Console.Write(inputTexts[2] + ": ");
+                    Console.Write(_inputTexts[Inputs.Quantity] + ": ");
                     inputs[2] = Console.ReadLine();
                 }
 
@@ -44,7 +44,7 @@ namespace Task7
                 while (!int.TryParse(inputs[3], out costOfOneUnit))
                 {
                     Console.WriteLine("Wrong entered Cost of one unit! Re-enter again!");
-                    Console.Write(inputTexts[3] + ": ");
+                    Console.Write(_inputTexts[Inputs.CostOfOneUnit] + ": ");
                     inputs[3] = Console.ReadLine();
                 }
 
@@ -110,10 +110,10 @@ namespace Task7
 
         private static void InitializeInputs()
         {
-            _inputs.Add(Inputs.Brand, "Brand");
-            _inputs.Add(Inputs.Model, "Model");
-            _inputs.Add(Inputs.Quantity, "Quantity");
-            _inputs.Add(Inputs.CostOfOneUnit, "Cost of one unit");
+            _inputTexts.Add(Inputs.Brand, "Brand");
+            _inputTexts.Add(Inputs.Model, "Model");
+            _inputTexts.Add(Inputs.Quantity, "Quantity");
+            _inputTexts.Add(Inputs.CostOfOneUnit, "Cost of one unit");
         }
     }
 }
