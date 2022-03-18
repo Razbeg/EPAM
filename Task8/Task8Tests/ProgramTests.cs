@@ -6,93 +6,29 @@ using System.Text;
 
 namespace Task8.Tests
 {
-    [TestClass()]
+    [TestClass]
     public class ProgramTests
     {
-        [TestMethod()]
-        public void OnlyAlpabetLettersFirst_LatinAlphabetLettersTest()
+        [DataTestMethod]
+        [DataRow("asfddsss", "asfddsss has 3 unequal consecutive characters")]
+        [DataRow("jandossa", "jandossa has 5 unequal consecutive characters")]
+        [DataRow("aaaaaaaaaa", "aaaaaaaaaa has 0 unequal consecutive characters")]
+        [DataRow("15#$as45ss", "15#$as45ss has non-Latin alphabet character or characters!")]
+        public void LatinAlphabetLettersTest(string word, string expected)
         {
-            string currentWord = "asfddsss";
-            string expected = $"{currentWord} has 3 unequal consecutive characters";
-
-            string actual = Program.LatinAlphabetLetters(currentWord);
+            string actual = Program.LatinAlphabetLetters(word);
 
             Assert.AreEqual(expected, actual);
         }
 
-        [TestMethod()]
-        public void OnlyAlpabetLettersSecond_LatinAlphabetLettersTest()
+        [DataTestMethod]
+        [DataRow("11584555", "11584555 has 4 unequal consecutive characters")]
+        [DataRow("84576594", "84576594 has 7 unequal consecutive characters")]
+        [DataRow("88888888", "88888888 has 0 unequal consecutive characters")]
+        [DataRow("15#$as45ss", "15#$as45ss has non-digit character or characters!")]
+        public void DigitsTest(string digits, string expected)
         {
-            string currentWord = "jandossa";
-            string expected = $"{currentWord} has 5 unequal consecutive characters";
-
-            string actual = Program.LatinAlphabetLetters(currentWord);
-
-            Assert.AreEqual(expected, actual);
-        }
-
-        [TestMethod()]
-        public void OnlyAlpabetLettersThird_LatinAlphabetLettersTest()
-        {
-            string currentWord = "aaaaaaaaaa";
-            string expected = $"{currentWord} has 0 unequal consecutive characters";
-
-            string actual = Program.LatinAlphabetLetters(currentWord);
-
-            Assert.AreEqual(expected, actual);
-        }
-
-        [TestMethod()]
-        public void AnyCharacters_LatinAlphabetLettersTest()
-        {
-            string currentWord = "15#$as45ss";
-            string expected = $"{currentWord} has non-Latin alphabet character or characters!";
-
-            string actual = Program.LatinAlphabetLetters(currentWord);
-
-            Assert.AreEqual(expected, actual);
-        }
-
-        [TestMethod()]
-        public void OnlyDigitsFirst_DigitsTest()
-        {
-            string currentWord = "11584555";
-            string expected = $"{currentWord} has 4 unequal consecutive characters";
-
-            string actual = Program.Digits(currentWord);
-
-            Assert.AreEqual(expected, actual);
-        }
-
-        [TestMethod()]
-        public void OnlyDigitsSecond_DigitsTest()
-        {
-            string currentWord = "84576594";
-            string expected = $"{currentWord} has 7 unequal consecutive characters";
-
-            string actual = Program.Digits(currentWord);
-
-            Assert.AreEqual(expected, actual);
-        }
-
-        [TestMethod()]
-        public void OnlyDigitsThird_DigitsTest()
-        {
-            string currentWord = "88888888";
-            string expected = $"{currentWord} has 0 unequal consecutive characters";
-
-            string actual = Program.Digits(currentWord);
-
-            Assert.AreEqual(expected, actual);
-        }
-
-        [TestMethod()]
-        public void AnyCharacters_DigitsTest()
-        {
-            string currentWord = "15#$as45ss";
-            string expected = $"{currentWord} has non-digit character or characters!";
-
-            string actual = Program.Digits(currentWord);
+            string actual = Program.Digits(digits);
 
             Assert.AreEqual(expected, actual);
         }
