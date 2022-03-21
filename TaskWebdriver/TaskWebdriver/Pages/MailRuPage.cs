@@ -66,8 +66,6 @@ namespace TaskWebdriver.Pages
             {
                 Console.WriteLine(_username);
             }
-
-            TestUtilities.TakeScreenShot(_driver);
         }
     }
 }

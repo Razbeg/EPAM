@@ -42,8 +42,6 @@ namespace TaskWebdriver.Pages
 
             var passwordNext = _driver.FindElement(By.Id(_passwordNextId));
             passwordNext.Click();
-
-            TestUtilities.TakeScreenShot(_driver);
         }
     }
 }
