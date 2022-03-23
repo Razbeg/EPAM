@@ -17,7 +17,7 @@ namespace TaskWebdriver.Pages
         private readonly string _passwordInputName = "password";
         private readonly string _submit = "//button[@type='submit']";
 
-        private readonly string _sentMail = "//span[@title='Elizabeth Norman <elizabethnorman965@gmail.com>']";
+        private readonly string _sentMail = "//*[contains(text(), 'Test mail')]";
 
         private IWebDriver _driver;
 

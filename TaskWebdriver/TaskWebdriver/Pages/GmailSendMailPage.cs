@@ -9,11 +9,11 @@ namespace TaskWebdriver.Pages
 {
     public class GmailSendMailPage
     {
-        private readonly string _composeMail = "//div[@class='T-I T-I-KE L3']";
+        private readonly string _composeMail = "(//*[@role='navigation']//*[@role='button'])[1]";
         private readonly string _toEmailName = "to";
         private readonly string _subjectBoxName = "subjectbox";
         private readonly string _textBox = "//div[@role='textbox']";
-        private readonly string _send = "//div[@role='button'][@class='T-I J-J5-Ji aoO v7 T-I-atl L3']";
+        private readonly string _send = "(//*[@role='group']//*[@role='button'])[1]";
 
         private IWebDriver _driver;
 

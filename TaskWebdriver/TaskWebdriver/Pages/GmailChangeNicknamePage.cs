@@ -11,14 +11,14 @@ namespace TaskWebdriver.Pages
         public string ChangeToName => ChangeTo;
         private const string ChangeTo = "Lisa";
 
-        private readonly string _accountsManager = "//a[@href='https://accounts.google.com/SignOutOptions?hl=ru&continue=https://mail.google.com&service=mail']";
+        private readonly string _accountsManager = "//*[contains(@href, 'SignOutOptions')]";
         private readonly string _accountsIframe = "(//iframe[contains(@role,'presentation')])[2]";
-        private readonly string _manageAccountLink = "//a[@href='https://myaccount.google.com/?hl=ru&authuser=0&utm_source=OGB&utm_medium=act']";
+        private readonly string _manageAccountLink = "//*[contains(@href, 'authuser')]";
         private readonly string _personalInfo = "(//a[@href='personal-info'])[2]";
         private readonly string _personalName = "//a[@href='name']";
         private readonly string _inputText = "//input[@type='text']";
         private readonly string _submitNutton = "//button[@type='submit']";
-        private readonly string _back = "//div[@role='navigation']//div[1]//span[1]//span[1]//span[1]";
+        private readonly string _back = "(//*[@role='navigation']//*[@role='button'])[1]";
 
         private IWebDriver _driver;
 
