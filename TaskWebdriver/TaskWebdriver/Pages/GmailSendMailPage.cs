@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using TaskWebdriver.Utilities;
 
 namespace TaskWebdriver.Pages
@@ -23,20 +24,35 @@ namespace TaskWebdriver.Pages
 
         public void SendMailTo(string email)
         {
-            TestUtilities.Text = TestUtilities.RandomText();
+            try
+            {
+                TestUtilities.Text = TestUtilities.RandomText();
 
-            _driver.FindElement(By.XPath(_composeMail)).Click();
-            
-            var toEmail = _driver.FindElement(By.Name(_toEmailName));
-            toEmail.SendKeys(email);
+                _driver.FindElement(By.XPath(_composeMail)).Click();
 
-            var inputSubject = _driver.FindElement(By.Name(_subjectBoxName));
-            inputSubject.SendKeys("Test mail");
+                var toEmail = _driver.FindElement(By.Name(_toEmailName));
+                toEmail.SendKeys(email);
 
-            var textBox = _driver.FindElement(By.XPath(_textBox));
-            textBox.SendKeys(TestUtilities.Text);
+                var inputSubject = _driver.FindElement(By.Name(_subjectBoxName));
+                inputSubject.SendKeys("Test mail");
 
-            _driver.FindElement(By.XPath(_send)).Click();
+                var textBox = _driver.FindElement(By.XPath(_textBox));
+                textBox.SendKeys(TestUtilities.Text);
+
+                _driver.FindElement(By.XPath(_send)).Click();
+
+                Thread.Sleep(10000);
+
+                TestUtilities.CheckValid = true;
+
+            }
+            catch (Exception ex)
+            {
+                TestUtilities.CheckValid = false;
+                TestUtilities.TakeScreenShot(_driver);
+
+                Console.WriteLine(ex.Message);
+            }
         }
     }
 }

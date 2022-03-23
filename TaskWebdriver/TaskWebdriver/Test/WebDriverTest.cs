@@ -2,6 +2,7 @@
 using TaskWebdriver.Pages;
 using TaskWebdriver.Driver;
 using TaskWebdriver.Utilities;
+using TaskWebdriver.Properties;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -25,41 +26,42 @@ namespace TaskWebdriver.Test
             DriverInstance.CloseBrowser();
         }
 
-        //[TestCase("elizabethnorman965", "GeMyYoq3WMVL")]
-        [TestCase("elizabeth.highground@gmail", "")]
-        //[TestCase("elizabeth.highground@gmail.com", "tTXj5huG")]
-        //[TestCase("", "")]
-        public void LoginGmail(string username, string password)
+        [TestCase(UserData.GmailValidUsername, UserData.GmailValidPassword)]
+        
+        public void LoginGmailValid(string username, string password)
         {
-            try
-            {
-                GmailLoginPage loginPage = new GmailLoginPage(_driver);
-                loginPage.OpenPage();
-                loginPage.Login(username, password);
-            }
-            catch (Exception)
-            {
-                TestUtilities.TakeScreenShot(_driver);
-            }
+            GmailLoginPage loginPage = new GmailLoginPage(_driver);
+            loginPage.OpenPage();
+
+            loginPage.Login(username, password);
+
+            Assert.IsTrue(TestUtilities.CheckValid);
         }
 
-        [TestCase("elizabethnorman965", "GeMyYoq3WMVL")]
+        [TestCase(UserData.GmailValidUsername, UserData.GmailInvalidPassword)]
+        [TestCase(UserData.GmailInvalidUsername, UserData.GmailInvalidPassword)]
+        [TestCase(UserData.GmailEmptyUsername, UserData.GmailEmptyPassword)]
+        public void LoginGmailInvalid(string username, string password)
+        {
+            GmailLoginPage loginPage = new GmailLoginPage(_driver);
+            loginPage.OpenPage();
+
+            loginPage.Login(username, password);
+
+            Assert.IsTrue(!TestUtilities.CheckValid);
+        }
+
+        [TestCase(UserData.GmailValidUsername, UserData.GmailValidPassword)]
         public void ChangeNickname(string username, string password)
         {
             GmailChangeNicknamePage changeNicknamePage = new GmailChangeNicknamePage(_driver);
             changeNicknamePage.Login(username, password);
+            changeNicknamePage.ChangeNickname();
 
-            var changedNickname = changeNicknamePage.ChangeNickname();
-
-            if (changedNickname == changeNicknamePage.ChangeToName)
-            {
-                Console.WriteLine($"Changing current nickname '{changedNickname}' to 'Elizabeth'");
-                changeNicknamePage.ChangeNicknameBack();
-                Console.WriteLine($"'{changedNickname}' not current nickname");
-            }
+            Assert.IsTrue(TestUtilities.CheckValid);
         }
 
-        [TestCase("elizabethnorman965", "GeMyYoq3WMVL")]
+        [TestCase(UserData.GmailValidUsername, UserData.GmailValidPassword)]
         public void SendMail(string username, string password)
         {
             GmailLoginPage loginPage = new GmailLoginPage(_driver);
@@ -67,12 +69,14 @@ namespace TaskWebdriver.Test
             loginPage.Login(username, password);
 
             GmailSendMailPage sendMailPage = new GmailSendMailPage(_driver);
-            sendMailPage.SendMailTo("norman.highground@bk.ru");
+            sendMailPage.SendMailTo(UserData.MailRuUsername);
 
             MailRuPage mailRuLoginPage = new MailRuPage(_driver);
             mailRuLoginPage.OpenPage();
-            mailRuLoginPage.Login("norman.highground@bk.ru", "gT8MJ55xN3N9ppK3");
+            mailRuLoginPage.Login(UserData.MailRuUsername, UserData.MailRuPassword);
             mailRuLoginPage.CheckMail();
+
+            Assert.IsTrue(TestUtilities.CheckValid);
         }
     }
 }

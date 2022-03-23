@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using TaskWebdriver.Utilities;
 
 namespace TaskWebdriver.Pages
 {
@@ -33,28 +34,47 @@ namespace TaskWebdriver.Pages
             loginPage.Login(username, password);
         }
 
-        public string ChangeNickname()
+        public void ChangeNickname()
         {
-            _driver.FindElement(By.XPath(_accountsManager)).Click();
-            _driver.SwitchTo().Frame(_driver.FindElement(By.XPath(_accountsIframe)));
-            _driver.FindElement(By.XPath(_manageAccountLink)).Click();
+            try
+            {
+                _driver.FindElement(By.XPath(_accountsManager)).Click();
+                _driver.SwitchTo().Frame(_driver.FindElement(By.XPath(_accountsIframe)));
+                _driver.FindElement(By.XPath(_manageAccountLink)).Click();
 
-            _driver.SwitchTo().Window(_driver.WindowHandles[1]);
+                _driver.SwitchTo().Window(_driver.WindowHandles[1]);
 
-            _driver.FindElement(By.XPath(_personalInfo)).Click();
-            _driver.FindElement(By.XPath(_personalName)).Click();
+                _driver.FindElement(By.XPath(_personalInfo)).Click();
+                _driver.FindElement(By.XPath(_personalName)).Click();
 
-            var name = _driver.FindElements(By.XPath(_inputText));
-            name[1].Clear();
-            name[1].SendKeys(ChangeTo);
+                var name = _driver.FindElements(By.XPath(_inputText));
+                name[1].Clear();
+                name[1].SendKeys(ChangeTo);
 
-            _driver.FindElement(By.XPath(_submitNutton)).Click();
-            _driver.FindElement(By.XPath(_back)).Click();
+                _driver.FindElement(By.XPath(_submitNutton)).Click();
+                _driver.FindElement(By.XPath(_back)).Click();
 
-            _driver.FindElement(By.XPath(_personalName)).Click();
-            name = _driver.FindElements(By.XPath(_inputText));
+                _driver.FindElement(By.XPath(_personalName)).Click();
+                name = _driver.FindElements(By.XPath(_inputText));
 
-            return name[1].GetAttribute("value");
+                if (name[1].GetAttribute("value") == ChangeTo)
+                {
+                    ChangeNicknameBack();
+                    TestUtilities.CheckValid = true;
+                }
+                else
+                {
+                    TestUtilities.CheckValid = false;
+                    TestUtilities.TakeScreenShot(_driver);
+                }
+            }
+            catch (Exception ex)
+            {
+                TestUtilities.CheckValid = false;
+                TestUtilities.TakeScreenShot(_driver);
+
+                Console.WriteLine(ex.Message);
+            }
         }
 
         public void ChangeNicknameBack()

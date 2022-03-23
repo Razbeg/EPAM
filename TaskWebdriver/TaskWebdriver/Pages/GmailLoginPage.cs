@@ -15,6 +15,7 @@ namespace TaskWebdriver.Pages
         private readonly string _identifierNextId = "identifierNext";
         private readonly string _inputPasswordName = "password";
         private readonly string _passwordNextId = "passwordNext";
+        private readonly string _checkLogin = "//a[@role='button']//img";
 
         private IWebDriver _driver;
 
@@ -31,17 +32,31 @@ namespace TaskWebdriver.Pages
 
         public void Login(string username, string password)
         {
-            var inputLogin = _driver.FindElement(By.Id(_inputLoginId));
-            inputLogin.SendKeys(username);
+            try
+            {
+                var inputLogin = _driver.FindElement(By.Id(_inputLoginId));
+                inputLogin.SendKeys(username);
 
-            var identifierNext = _driver.FindElement(By.Id(_identifierNextId));
-            identifierNext.Click();
+                var identifierNext = _driver.FindElement(By.Id(_identifierNextId));
+                identifierNext.Click();
 
-            var inputPassword = _driver.FindElement(By.Name(_inputPasswordName));
-            inputPassword.SendKeys(password);
+                var inputPassword = _driver.FindElement(By.Name(_inputPasswordName));
+                inputPassword.SendKeys(password);
 
-            var passwordNext = _driver.FindElement(By.Id(_passwordNextId));
-            passwordNext.Click();
+                var passwordNext = _driver.FindElement(By.Id(_passwordNextId));
+                passwordNext.Click();
+
+                var checkLogin = _driver.FindElement(By.XPath(_checkLogin));
+
+                TestUtilities.CheckValid = true;
+            }
+            catch (Exception ex)
+            {
+                TestUtilities.TakeScreenShot(_driver);
+                TestUtilities.CheckValid = false;
+
+                Console.WriteLine(ex.Message);
+            }
         }
     }
 }

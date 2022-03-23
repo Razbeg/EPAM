@@ -21,8 +21,6 @@ namespace TaskWebdriver.Pages
 
         private IWebDriver _driver;
 
-        private string _username;
-
         public MailRuPage(IWebDriver driver)
         {
             _driver = driver;
@@ -37,34 +35,51 @@ namespace TaskWebdriver.Pages
 
         public void Login(string username, string password)
         {
-            _username = username;
+            try
+            {
+                _driver.FindElement(By.XPath(_login)).Click();
+                _driver.SwitchTo().Frame(_driver.FindElement(By.XPath(_loginIFrame)));
 
-            _driver.FindElement(By.XPath(_login)).Click();
-            _driver.SwitchTo().Frame(_driver.FindElement(By.XPath(_loginIFrame)));
+                var usernameElement = _driver.FindElement(By.Name(_usernameInputName));
+                usernameElement.SendKeys(username);
 
-            var usernameElement = _driver.FindElement(By.Name(_usernameInputName));
-            usernameElement.SendKeys(username);
+                var submitElement = _driver.FindElement(By.XPath(_submit));
+                submitElement.Click();
 
-            var submitElement = _driver.FindElement(By.XPath(_submit));
-            submitElement.Click();
+                var passwordElement = _driver.FindElement(By.Name(_passwordInputName));
+                passwordElement.SendKeys(password);
 
-            var passwordElement = _driver.FindElement(By.Name(_passwordInputName));
-            passwordElement.SendKeys(password);
+                submitElement = _driver.FindElement(By.XPath(_submit));
+                submitElement.Click();
 
-            submitElement = _driver.FindElement(By.XPath(_submit));
-            submitElement.Click();
+                TestUtilities.CheckValid = true;
+            }
+            catch (Exception ex)
+            {
+                TestUtilities.CheckValid = false;
+                TestUtilities.TakeScreenShot(_driver);
+
+                Console.WriteLine(ex.Message);
+            }
         }
 
         public void CheckMail()
         {
-            _driver.SwitchTo().Window(_driver.WindowHandles.Last());
-            _driver.FindElement(By.XPath(_sentMail)).Click();
-
-            var sentMailText = _driver.FindElement(By.XPath($"//div[contains(text(),'{TestUtilities.Text}')]"));
-
-            if (sentMailText.Text != null)
+            try
             {
-                Console.WriteLine(_username);
+                _driver.SwitchTo().Window(_driver.WindowHandles.Last());
+                _driver.FindElement(By.XPath(_sentMail)).Click();
+
+                var sentMailText = _driver.FindElement(By.XPath($"//div[contains(text(),'{TestUtilities.Text}')]"));
+
+                TestUtilities.CheckValid = true;
+            }
+            catch (Exception ex)
+            {
+                TestUtilities.CheckValid = false;
+                TestUtilities.TakeScreenShot(_driver);
+
+                Console.WriteLine(ex.Message);
             }
         }
     }

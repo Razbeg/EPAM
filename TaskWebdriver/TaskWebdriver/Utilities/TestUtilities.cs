@@ -9,6 +9,7 @@ namespace TaskWebdriver.Utilities
     public class TestUtilities
     {
         public static string Text { get; set; }
+        public static bool CheckValid { get; set; }
 
         public static string RandomText()
         {

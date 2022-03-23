@@ -12,10 +12,10 @@ namespace Task9
         private IWebDriver _driver;
 
         private readonly By _searchLocator = By.Id("orbit-search-button");
-        private readonly By _homeTab = By.XPath("//div[@aria-label='Primary']//li[1]");
+        private readonly By _homeTab = By.XPath("//div[@aria-label='Primary']//*[@data-stat-title='Home']");
         private readonly By _signIn = By.Id("idcta-statusbar");
-        private readonly By _socialLinkTwitter = By.XPath("//a[@href='https://twitter.com/BBCSport']");
-        private readonly By _socialLinkYoutube = By.XPath("//a[4]");
+        private readonly By _socialLinkTwitter = By.XPath("//*[contains(@class, 'twitter')]");
+        private readonly By _socialLinkYoutube = By.XPath("//*[contains(@class, 'youtube')]");
 
         [SetUp]
         public void StartBrowser()
