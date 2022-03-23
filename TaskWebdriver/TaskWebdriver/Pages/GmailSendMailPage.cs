@@ -9,11 +9,11 @@ namespace TaskWebdriver.Pages
 {
     public class GmailSendMailPage
     {
-        private readonly string _composeMail = "(//*[@role='navigation']//*[@role='button'])[1]";
-        private readonly string _toEmailName = "to";
-        private readonly string _subjectBoxName = "subjectbox";
-        private readonly string _textBox = "//div[@role='textbox']";
-        private readonly string _send = "(//*[@role='group']//*[@role='button'])[1]";
+        private readonly By _composeMail = By.XPath("//*[@role='navigation']//div[@role='button']");
+        private readonly By _toEmailName = By.Name("to");
+        private readonly By _subjectBoxName = By.Name("subjectbox");
+        private readonly By _textBox = By.XPath("//div[@role='textbox']");
+        private readonly By _send = By.XPath("//*[contains(@aria-label, 'Enter')]");
 
         private IWebDriver _driver;
 
@@ -24,35 +24,22 @@ namespace TaskWebdriver.Pages
 
         public void SendMailTo(string email)
         {
-            try
-            {
-                TestUtilities.Text = TestUtilities.RandomText();
+            TestUtilities.Text = TestUtilities.RandomText();
 
-                _driver.FindElement(By.XPath(_composeMail)).Click();
+            _driver.FindElement(_composeMail).Click();
 
-                var toEmail = _driver.FindElement(By.Name(_toEmailName));
-                toEmail.SendKeys(email);
+            var toEmail = _driver.FindElement(_toEmailName);
+            toEmail.SendKeys(email);
 
-                var inputSubject = _driver.FindElement(By.Name(_subjectBoxName));
-                inputSubject.SendKeys("Test mail");
+            var inputSubject = _driver.FindElement(_subjectBoxName);
+            inputSubject.SendKeys("Test mail");
 
-                var textBox = _driver.FindElement(By.XPath(_textBox));
-                textBox.SendKeys(TestUtilities.Text);
+            var textBox = _driver.FindElement(_textBox);
+            textBox.SendKeys(TestUtilities.Text);
 
-                _driver.FindElement(By.XPath(_send)).Click();
+            _driver.FindElement(_send).Click();
 
-                Thread.Sleep(10000);
-
-                TestUtilities.CheckValid = true;
-
-            }
-            catch (Exception ex)
-            {
-                TestUtilities.CheckValid = false;
-                TestUtilities.TakeScreenShot(_driver);
-
-                Console.WriteLine(ex.Message);
-            }
+            Thread.Sleep(5000);
         }
     }
 }

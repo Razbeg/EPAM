@@ -11,14 +11,13 @@ namespace TaskWebdriver.Pages
         public string ChangeToName => ChangeTo;
         private const string ChangeTo = "Lisa";
 
-        private readonly string _accountsManager = "//*[contains(@href, 'SignOutOptions')]";
-        private readonly string _accountsIframe = "(//iframe[contains(@role,'presentation')])[2]";
-        private readonly string _manageAccountLink = "//*[contains(@href, 'authuser')]";
-        private readonly string _personalInfo = "(//a[@href='personal-info'])[2]";
-        private readonly string _personalName = "//a[@href='name']";
-        private readonly string _inputText = "//input[@type='text']";
-        private readonly string _submitNutton = "//button[@type='submit']";
-        private readonly string _back = "(//*[@role='navigation']//*[@role='button'])[1]";
+        private readonly By _accountsManager = By.XPath("//*[contains(@href, 'SignOutOptions')]");
+        private readonly By _accountsIframe = By.XPath("//iframe[contains(@src, 'account')]");
+        private readonly By _manageAccountLink = By.XPath("//*[contains(@href, 'authuser')]");
+        private readonly By _personalInfo = By.XPath("//a[@href='personal-info']//img");
+        private readonly By _personalName = By.XPath("//a[@href='name']");
+        private readonly By _inputText = By.XPath("//input[@type='text']");
+        private readonly By _submitNutton = By.XPath("//button[@type='submit']");
 
         private IWebDriver _driver;
 
@@ -36,47 +35,25 @@ namespace TaskWebdriver.Pages
 
         public void ChangeNickname()
         {
-            try
-            {
-                _driver.FindElement(By.XPath(_accountsManager)).Click();
-                _driver.SwitchTo().Frame(_driver.FindElement(By.XPath(_accountsIframe)));
-                _driver.FindElement(By.XPath(_manageAccountLink)).Click();
+            _driver.FindElement(_accountsManager).Click();
+            _driver.SwitchTo().Frame(_driver.FindElement(_accountsIframe));
+            _driver.FindElement(_manageAccountLink).Click();
 
-                _driver.SwitchTo().Window(_driver.WindowHandles[1]);
+            _driver.SwitchTo().Window(_driver.WindowHandles[1]);
 
-                _driver.FindElement(By.XPath(_personalInfo)).Click();
-                _driver.FindElement(By.XPath(_personalName)).Click();
+            _driver.FindElement(_personalInfo).Click();
+            _driver.FindElement(_personalName).Click();
 
-                var name = _driver.FindElements(By.XPath(_inputText));
-                name[1].Clear();
-                name[1].SendKeys(ChangeTo);
+            var name = _driver.FindElements(_inputText);
+            name[1].Clear();
+            name[1].SendKeys(ChangeTo);
 
-                _driver.FindElement(By.XPath(_submitNutton)).Click();
-                _driver.FindElement(By.XPath(_back)).Click();
-
-                _driver.FindElement(By.XPath(_personalName)).Click();
-                name = _driver.FindElements(By.XPath(_inputText));
-
-                if (name[1].GetAttribute("value") == ChangeTo)
-                {
-                    ChangeNicknameBack();
-                    TestUtilities.CheckValid = true;
-                }
-                else
-                {
-                    TestUtilities.CheckValid = false;
-                    TestUtilities.TakeScreenShot(_driver);
-                }
-            }
-            catch (Exception ex)
-            {
-                TestUtilities.CheckValid = false;
-                TestUtilities.TakeScreenShot(_driver);
-
-                Console.WriteLine(ex.Message);
-            }
+            _driver.FindElement(_submitNutton).Click();
+            _driver.Navigate().Back();
+            _driver.Navigate().Refresh();
         }
 
+        /*
         public void ChangeNicknameBack()
         {
             var name = _driver.FindElements(By.XPath(_inputText));
@@ -85,5 +62,6 @@ namespace TaskWebdriver.Pages
 
             _driver.FindElement(By.XPath(_submitNutton)).Click();
         }
+        */
     }
 }

@@ -9,7 +9,6 @@ namespace TaskWebdriver.Utilities
     public class TestUtilities
     {
         public static string Text { get; set; }
-        public static bool CheckValid { get; set; }
 
         public static string RandomText()
         {
@@ -22,6 +21,16 @@ namespace TaskWebdriver.Utilities
         {
             Screenshot screenshot = (driver as ITakesScreenshot).GetScreenshot();
             screenshot.SaveAsFile($"{Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.Parent}\\Screenshots\\screenshot_{DateTime.Now.ToString("dd-MM-yyyy_HH-mm")}.png", ScreenshotImageFormat.Png);
+        }
+
+        public static void CleanFolder()
+        {
+            var screenshotsList = Directory.GetFiles($"{Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.Parent}\\Screenshots");
+
+            foreach (var screenshot in screenshotsList)
+            {
+                File.Delete(screenshot);
+            }
         }
     }
 }

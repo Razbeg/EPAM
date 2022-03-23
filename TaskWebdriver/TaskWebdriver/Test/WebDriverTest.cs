@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using NUnit.Framework.Interfaces;
 using TaskWebdriver.Pages;
 using TaskWebdriver.Driver;
 using TaskWebdriver.Utilities;
@@ -17,56 +18,75 @@ namespace TaskWebdriver.Test
         [SetUp]
         public void Init()
         {
+            TestUtilities.CleanFolder();
             _driver = DriverInstance.GetDriver();
         }
 
         [TearDown]
         public void CleanUp()
         {
+            if (TestContext.CurrentContext.Result.Outcome != ResultState.Success)
+            {
+                TestUtilities.TakeScreenShot(_driver);
+            }
+
             DriverInstance.CloseBrowser();
         }
 
-        [TestCase(UserData.GmailValidUsername, UserData.GmailValidPassword)]
-        
-        public void LoginGmailValid(string username, string password)
+        [Test]
+        public void LoginGmailValidTest()
         {
             GmailLoginPage loginPage = new GmailLoginPage(_driver);
             loginPage.OpenPage();
+            loginPage.Login(UserData.GmailValidUsername, UserData.GmailValidPassword);
 
-            loginPage.Login(username, password);
+            var checkLogin = _driver.FindElement(By.XPath($"//*[contains(@aria-label, '{UserData.GmailValidUsername}')]"));
 
-            Assert.IsTrue(TestUtilities.CheckValid);
+            Assert.IsNotNull(checkLogin);
         }
 
-        [TestCase(UserData.GmailValidUsername, UserData.GmailInvalidPassword)]
-        [TestCase(UserData.GmailInvalidUsername, UserData.GmailInvalidPassword)]
-        [TestCase(UserData.GmailEmptyUsername, UserData.GmailEmptyPassword)]
-        public void LoginGmailInvalid(string username, string password)
+        [Test]
+        public void LoginGmailInvalidTest()
         {
             GmailLoginPage loginPage = new GmailLoginPage(_driver);
             loginPage.OpenPage();
+            loginPage.Login(UserData.GmailInvalidUsername, UserData.GmailInvalidPassword);
 
-            loginPage.Login(username, password);
+            var checkLogin = _driver.FindElement(By.XPath("//*[@badinput='false']"));
 
-            Assert.IsTrue(!TestUtilities.CheckValid);
+            Assert.IsNotNull(checkLogin);
         }
 
-        [TestCase(UserData.GmailValidUsername, UserData.GmailValidPassword)]
-        public void ChangeNickname(string username, string password)
+        [Test]
+        public void LoginGmailEmptyTest()
+        {
+            GmailLoginPage loginPage = new GmailLoginPage(_driver);
+            loginPage.OpenPage();
+            loginPage.Login(UserData.GmailEmptyUsername, UserData.GmailEmptyPassword);
+
+            var checkLogin = _driver.FindElement(By.XPath("//*[@aria-invalid='true']"));
+
+            Assert.IsNotNull(checkLogin);
+        }
+
+        [Test]
+        public void ChangeNicknameTest()
         {
             GmailChangeNicknamePage changeNicknamePage = new GmailChangeNicknamePage(_driver);
-            changeNicknamePage.Login(username, password);
+            changeNicknamePage.Login(UserData.GmailValidUsername, UserData.GmailValidPassword);
             changeNicknamePage.ChangeNickname();
 
-            Assert.IsTrue(TestUtilities.CheckValid);
+            var actual = _driver.FindElement(By.XPath($"//*[contains(text(), '{changeNicknamePage.ChangeToName}')]"));
+
+            Assert.IsNotNull(actual);
         }
 
-        [TestCase(UserData.GmailValidUsername, UserData.GmailValidPassword)]
-        public void SendMail(string username, string password)
+        [Test]
+        public void SendMailTest()
         {
             GmailLoginPage loginPage = new GmailLoginPage(_driver);
             loginPage.OpenPage();
-            loginPage.Login(username, password);
+            loginPage.Login(UserData.GmailValidUsername, UserData.GmailValidPassword);
 
             GmailSendMailPage sendMailPage = new GmailSendMailPage(_driver);
             sendMailPage.SendMailTo(UserData.MailRuUsername);
@@ -76,7 +96,9 @@ namespace TaskWebdriver.Test
             mailRuLoginPage.Login(UserData.MailRuUsername, UserData.MailRuPassword);
             mailRuLoginPage.CheckMail();
 
-            Assert.IsTrue(TestUtilities.CheckValid);
+            var sentMailText = _driver.FindElement(By.XPath($"//div[contains(text(),'{TestUtilities.Text}')]"));
+
+            Assert.IsNotNull(sentMailText);
         }
     }
 }

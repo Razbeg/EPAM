@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using TaskWebdriver.Utilities;
 
 namespace TaskWebdriver.Pages
@@ -11,13 +12,12 @@ namespace TaskWebdriver.Pages
     {
         private const string BaseUrl = "https://mail.ru/";
 
-        private readonly string _login = "//div[@data-testid='logged-out-one-click']//button";
-        private readonly string _loginIFrame = "//iframe[@class='ag-popup__frame__layout__iframe']";
-        private readonly string _usernameInputName = "username";
-        private readonly string _passwordInputName = "password";
-        private readonly string _submit = "//button[@type='submit']";
-
-        private readonly string _sentMail = "//*[contains(text(), 'Test mail')]";
+        private readonly By _login = By.XPath("//div[@data-testid='logged-out-one-click']//button");
+        private readonly By _loginIFrame = By.XPath("//iframe[@class='ag-popup__frame__layout__iframe']");
+        private readonly By _usernameInput = By.Name("username");
+        private readonly By _passwordInput = By.Name("password");
+        private readonly By _submit = By.XPath("//button[@type='submit']");
+        private readonly By _sentMail = By.XPath("//*[contains(@title, 'Elizabeth')]");
 
         private IWebDriver _driver;
 
@@ -35,52 +35,28 @@ namespace TaskWebdriver.Pages
 
         public void Login(string username, string password)
         {
-            try
-            {
-                _driver.FindElement(By.XPath(_login)).Click();
-                _driver.SwitchTo().Frame(_driver.FindElement(By.XPath(_loginIFrame)));
+            _driver.FindElement(_login).Click();
+            _driver.SwitchTo().Frame(_driver.FindElement(_loginIFrame));
 
-                var usernameElement = _driver.FindElement(By.Name(_usernameInputName));
-                usernameElement.SendKeys(username);
+            var usernameElement = _driver.FindElement(_usernameInput);
+            usernameElement.SendKeys(username);
 
-                var submitElement = _driver.FindElement(By.XPath(_submit));
-                submitElement.Click();
+            var submitElement = _driver.FindElement(_submit);
+            submitElement.Click();
 
-                var passwordElement = _driver.FindElement(By.Name(_passwordInputName));
-                passwordElement.SendKeys(password);
+            var passwordElement = _driver.FindElement(_passwordInput);
+            passwordElement.SendKeys(password);
 
-                submitElement = _driver.FindElement(By.XPath(_submit));
-                submitElement.Click();
-
-                TestUtilities.CheckValid = true;
-            }
-            catch (Exception ex)
-            {
-                TestUtilities.CheckValid = false;
-                TestUtilities.TakeScreenShot(_driver);
-
-                Console.WriteLine(ex.Message);
-            }
+            submitElement = _driver.FindElement(_submit);
+            submitElement.Click();
         }
 
         public void CheckMail()
         {
-            try
-            {
-                _driver.SwitchTo().Window(_driver.WindowHandles.Last());
-                _driver.FindElement(By.XPath(_sentMail)).Click();
+            _driver.SwitchTo().Window(_driver.WindowHandles.Last());
+            _driver.FindElement(_sentMail).Click();
 
-                var sentMailText = _driver.FindElement(By.XPath($"//div[contains(text(),'{TestUtilities.Text}')]"));
-
-                TestUtilities.CheckValid = true;
-            }
-            catch (Exception ex)
-            {
-                TestUtilities.CheckValid = false;
-                TestUtilities.TakeScreenShot(_driver);
-
-                Console.WriteLine(ex.Message);
-            }
+            Thread.Sleep(5000);
         }
     }
 }

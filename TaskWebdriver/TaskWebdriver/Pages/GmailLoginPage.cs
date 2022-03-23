@@ -3,7 +3,8 @@ using TaskWebdriver.Driver;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using TaskWebdriver.Utilities;
+using TaskWebdriver.Properties;
+using System.Threading;
 
 namespace TaskWebdriver.Pages
 {
@@ -11,11 +12,10 @@ namespace TaskWebdriver.Pages
     {
         private const string BaseUrl = "https://gmail.com/";
 
-        private readonly string _inputLoginId = "identifierId";
-        private readonly string _identifierNextId = "identifierNext";
-        private readonly string _inputPasswordName = "password";
-        private readonly string _passwordNextId = "passwordNext";
-        private readonly string _checkLogin = "//a[@role='button']//img";
+        private readonly By _inputLogin = By.Id("identifierId");
+        private readonly By _identifierNext = By.Id("identifierNext");
+        private readonly By _inputPassword = By.Name("password");
+        private readonly By _passwordNext = By.Id("passwordNext");
 
         private IWebDriver _driver;
 
@@ -32,30 +32,21 @@ namespace TaskWebdriver.Pages
 
         public void Login(string username, string password)
         {
-            try
+            var inputLogin = _driver.FindElement(_inputLogin);
+            inputLogin.SendKeys(username);
+
+            var identifierNext = _driver.FindElement(_identifierNext);
+            identifierNext.Click();
+
+            if (username == UserData.GmailValidUsername)
             {
-                var inputLogin = _driver.FindElement(By.Id(_inputLoginId));
-                inputLogin.SendKeys(username);
-
-                var identifierNext = _driver.FindElement(By.Id(_identifierNextId));
-                identifierNext.Click();
-
-                var inputPassword = _driver.FindElement(By.Name(_inputPasswordName));
+                var inputPassword = _driver.FindElement(_inputPassword);
                 inputPassword.SendKeys(password);
 
-                var passwordNext = _driver.FindElement(By.Id(_passwordNextId));
+                var passwordNext = _driver.FindElement(_passwordNext);
                 passwordNext.Click();
 
-                var checkLogin = _driver.FindElement(By.XPath(_checkLogin));
-
-                TestUtilities.CheckValid = true;
-            }
-            catch (Exception ex)
-            {
-                TestUtilities.TakeScreenShot(_driver);
-                TestUtilities.CheckValid = false;
-
-                Console.WriteLine(ex.Message);
+                Thread.Sleep(5000);
             }
         }
     }

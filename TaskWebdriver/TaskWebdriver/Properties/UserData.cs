@@ -9,7 +9,7 @@ namespace TaskWebdriver.Properties
         public const string GmailValidUsername = "elizabethnorman965";
         public const string GmailValidPassword = "GeMyYoq3WMVL";
 
-        public const string GmailInvalidUsername = "eliza965";
+        public const string GmailInvalidUsername = "asdf";
         public const string GmailInvalidPassword = "yYoq3";
 
         public const string GmailEmptyUsername = "";
