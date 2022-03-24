@@ -15,10 +15,15 @@ namespace TaskWebdriver.Test
     {
         private IWebDriver _driver;
 
+        [OneTimeSetUp]
+        public void Awake()
+        {
+            TestUtilities.CleanFolder();
+        }
+
         [SetUp]
         public void Init()
         {
-            TestUtilities.CleanFolder();
             _driver = DriverInstance.GetDriver();
         }
 
@@ -68,7 +73,7 @@ namespace TaskWebdriver.Test
 
             Assert.IsNotNull(checkLogin);
         }
-
+        
         [Test]
         public void ChangeNicknameTest()
         {
