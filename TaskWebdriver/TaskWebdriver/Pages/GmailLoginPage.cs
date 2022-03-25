@@ -25,6 +25,8 @@ namespace TaskWebdriver.Pages
         }
 
         public IWebElement checkLogin => _driver.FindElement(By.XPath($"//*[contains(@aria-label, '{UserData.GmailValidUsername}')]"));
+        public IWebElement checkLoginInvalid => _driver.FindElement(By.XPath("//*[@badinput='false']"));
+        public IWebElement checkLoginEmpty => _driver.FindElement(By.XPath("//*[@aria-invalid='true']"));
 
         public void OpenPage()
         {

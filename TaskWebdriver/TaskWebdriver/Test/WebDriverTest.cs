@@ -55,9 +55,7 @@ namespace TaskWebdriver.Test
             loginPage.OpenPage();
             loginPage.Login(UserData.GmailInvalidUsername, UserData.GmailInvalidPassword);
 
-            var checkLogin = _driver.FindElement(By.XPath("//*[@badinput='false']"));
-
-            Assert.IsNotNull(checkLogin);
+            Assert.IsTrue(loginPage.checkLoginInvalid.Displayed);
         }
 
         [Test]
@@ -67,9 +65,7 @@ namespace TaskWebdriver.Test
             loginPage.OpenPage();
             loginPage.Login(UserData.GmailEmptyUsername, UserData.GmailEmptyPassword);
 
-            var checkLogin = _driver.FindElement(By.XPath("//*[@aria-invalid='true']"));
-
-            Assert.IsNotNull(checkLogin);
+            Assert.IsTrue(loginPage.checkLoginEmpty.Displayed);
         }
         
         [Test]
@@ -79,9 +75,7 @@ namespace TaskWebdriver.Test
             changeNicknamePage.Login(UserData.GmailValidUsername, UserData.GmailValidPassword);
             changeNicknamePage.ChangeNickname();
 
-            var actual = _driver.FindElement(By.XPath($"//*[contains(text(), '{changeNicknamePage.ChangeToName}')]"));
-
-            Assert.IsNotNull(actual);
+            Assert.IsNotNull(changeNicknamePage.actual);
         }
 
         [Test]
@@ -99,9 +93,7 @@ namespace TaskWebdriver.Test
             mailRuLoginPage.Login(UserData.MailRuUsername, UserData.MailRuPassword);
             mailRuLoginPage.CheckMail();
 
-            var sentMailText = _driver.FindElement(By.XPath($"//div[contains(text(),'{TestUtilities.Text}')]"));
-
-            Assert.IsNotNull(sentMailText);
+            Assert.IsTrue(mailRuLoginPage.sentMailText.Displayed);
         }
     }
 }

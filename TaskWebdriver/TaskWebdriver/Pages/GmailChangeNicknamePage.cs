@@ -21,6 +21,8 @@ namespace TaskWebdriver.Pages
 
         private IWebDriver _driver;
 
+        public IWebElement actual => _driver.FindElement(By.XPath($"//*[contains(text(), 'Elizabeth')]"));
+
         public GmailChangeNicknamePage(IWebDriver driver)
         {
             _driver = driver;
@@ -52,17 +54,18 @@ namespace TaskWebdriver.Pages
             _driver.FindElement(_submitNutton).Click();
             _driver.Navigate().Back();
             _driver.Navigate().Refresh();
+
+            ChangeNicknameBack();
         }
 
-        /*
         public void ChangeNicknameBack()
         {
-            var name = _driver.FindElements(By.XPath(_inputText));
+            var name = _driver.FindElements(_inputText);
             name[1].Clear();
             name[1].SendKeys("Elizabeth");
 
-            _driver.FindElement(By.XPath(_submitNutton)).Click();
+            _driver.FindElement(_submitNutton).Click();
         }
-        */
+        
     }
 }

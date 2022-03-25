@@ -21,6 +21,8 @@ namespace TaskWebdriver.Pages
 
         private IWebDriver _driver;
 
+        public IWebElement  sentMailText => _driver.FindElement(By.XPath($"//div[contains(text(),'{TestUtilities.Text}')]"));
+
         public MailRuPage(IWebDriver driver)
         {
             _driver = driver;
