@@ -45,9 +45,7 @@ namespace TaskWebdriver.Test
             loginPage.OpenPage();
             loginPage.Login(UserData.GmailValidUsername, UserData.GmailValidPassword);
 
-            var checkLogin = _driver.FindElement(By.XPath($"//*[contains(@aria-label, '{UserData.GmailValidUsername}')]"));
-
-            Assert.IsNotNull(checkLogin);
+            Assert.IsTrue(loginPage.checkLogin.Displayed);
         }
 
         [Test]

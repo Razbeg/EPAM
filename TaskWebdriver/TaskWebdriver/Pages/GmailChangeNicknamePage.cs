@@ -24,6 +24,7 @@ namespace TaskWebdriver.Pages
         public GmailChangeNicknamePage(IWebDriver driver)
         {
             _driver = driver;
+            _driver.Manage().Window.Size = new System.Drawing.Size(1920, 1080);
         }
 
         public void Login(string username, string password)

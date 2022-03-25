@@ -24,6 +24,8 @@ namespace TaskWebdriver.Pages
             _driver = driver;
         }
 
+        public IWebElement checkLogin => _driver.FindElement(By.XPath($"//*[contains(@aria-label, '{UserData.GmailValidUsername}')]"));
+
         public void OpenPage()
         {
             _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);

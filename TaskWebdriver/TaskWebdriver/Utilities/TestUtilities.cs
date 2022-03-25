@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using NUnit.Framework;
 using OpenQA.Selenium;
 
 namespace TaskWebdriver.Utilities
@@ -20,7 +21,7 @@ namespace TaskWebdriver.Utilities
         public static void TakeScreenShot(IWebDriver driver)
         {
             Screenshot screenshot = (driver as ITakesScreenshot).GetScreenshot();
-            screenshot.SaveAsFile($"{Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.Parent}\\Screenshots\\screenshot_{DateTime.Now.ToString("dd-MM-yyyy_HH-mm-ss")}.png", ScreenshotImageFormat.Png);
+            screenshot.SaveAsFile($"{Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.Parent}\\Screenshots\\{TestContext.CurrentContext.Test.Name}_{DateTime.Now.ToString("dd-MM-yyyy_HH-mm-ss")}.png", ScreenshotImageFormat.Png);
         }
 
         public static void CleanFolder()
