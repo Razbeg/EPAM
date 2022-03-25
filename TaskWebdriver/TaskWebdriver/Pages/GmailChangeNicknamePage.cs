@@ -16,7 +16,8 @@ namespace TaskWebdriver.Pages
         private readonly By _manageAccountLink = By.XPath("//*[contains(@href, 'authuser')]");
         private readonly By _personalInfo = By.XPath("//a[@href='personal-info']//img");
         private readonly By _personalName = By.XPath("//a[@href='name']");
-        private readonly By _inputText = By.XPath("//input[@type='text']");
+        private readonly By _inputText = By.XPath("//input[@value='Elizabeth']");
+        private readonly By _inputTextFrom = By.XPath($"//input[@value='{ChangeTo}']");
         private readonly By _submitNutton = By.XPath("//button[@type='submit']");
 
         private IWebDriver _driver;
@@ -47,22 +48,24 @@ namespace TaskWebdriver.Pages
             _driver.FindElement(_personalInfo).Click();
             _driver.FindElement(_personalName).Click();
 
-            var name = _driver.FindElements(_inputText);
-            name[1].Clear();
-            name[1].SendKeys(ChangeTo);
+            var name = _driver.FindElement(_inputText);
+            name.Clear();
+            name.SendKeys(ChangeTo);
 
             _driver.FindElement(_submitNutton).Click();
             _driver.Navigate().Back();
             _driver.Navigate().Refresh();
+
+            _driver.FindElement(_personalName).Click();
 
             ChangeNicknameBack();
         }
 
         public void ChangeNicknameBack()
         {
-            var name = _driver.FindElements(_inputText);
-            name[1].Clear();
-            name[1].SendKeys("Elizabeth");
+            var name = _driver.FindElement(_inputTextFrom);
+            name.Clear();
+            name.SendKeys("Elizabeth");
 
             _driver.FindElement(_submitNutton).Click();
         }
