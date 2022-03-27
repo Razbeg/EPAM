@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using TaskWebdriver.Properties;
 using TaskWebdriver.Utilities;
 
 namespace TaskWebdriver.Pages
@@ -21,18 +22,20 @@ namespace TaskWebdriver.Pages
         private readonly By _submitNutton = By.XPath("//button[@type='submit']");
 
         private IWebDriver _driver;
+        private UserData _userdata;
 
         public IWebElement actual => _driver.FindElement(By.XPath($"//*[contains(text(), 'Elizabeth')]"));
 
-        public GmailChangeNicknamePage(IWebDriver driver)
+        public GmailChangeNicknamePage(IWebDriver driver, UserData userData)
         {
             _driver = driver;
+            _userdata = userData;
             _driver.Manage().Window.Size = new System.Drawing.Size(1920, 1080);
         }
 
         public void Login(string username, string password)
         {
-            GmailLoginPage loginPage = new GmailLoginPage(_driver);
+            GmailLoginPage loginPage = new GmailLoginPage(_driver, _userdata);
             loginPage.OpenPage();
             loginPage.Login(username, password);
         }
@@ -68,6 +71,8 @@ namespace TaskWebdriver.Pages
             name.SendKeys("Elizabeth");
 
             _driver.FindElement(_submitNutton).Click();
+            _driver.Navigate().Back();
+            _driver.Navigate().Refresh();
         }
         
     }

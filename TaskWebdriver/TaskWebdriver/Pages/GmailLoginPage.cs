@@ -18,13 +18,15 @@ namespace TaskWebdriver.Pages
         private readonly By _passwordNext = By.Id("passwordNext");
 
         private IWebDriver _driver;
+        private UserData _userData;
 
-        public GmailLoginPage(IWebDriver driver)
+        public GmailLoginPage(IWebDriver driver, UserData userdata)
         {
             _driver = driver;
+            _userData = userdata;
         }
 
-        public IWebElement checkLogin => _driver.FindElement(By.XPath($"//*[contains(@aria-label, '{UserData.GmailValidUsername}')]"));
+        public IWebElement checkLogin => _driver.FindElement(By.XPath($"//*[contains(@aria-label, '{_userData.GmailValidUsername}')]"));
         public IWebElement checkLoginInvalid => _driver.FindElement(By.XPath("//*[@badinput='false']"));
         public IWebElement checkLoginEmpty => _driver.FindElement(By.XPath("//*[@aria-invalid='true']"));
 
@@ -42,7 +44,7 @@ namespace TaskWebdriver.Pages
             var identifierNext = _driver.FindElement(_identifierNext);
             identifierNext.Click();
 
-            if (username == UserData.GmailValidUsername)
+            if (username == _userData.GmailValidUsername)
             {
                 var inputPassword = _driver.FindElement(_inputPassword);
                 inputPassword.SendKeys(password);

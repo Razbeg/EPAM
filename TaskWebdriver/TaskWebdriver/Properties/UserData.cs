@@ -1,21 +1,41 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
+using System.Text.Json;
 
 namespace TaskWebdriver.Properties
 {
     public class UserData
     {
-        public const string GmailValidUsername = "elizabethnorman965";
-        public const string GmailValidPassword = "GeMyYoq3WMVL";
+        private User _userData;
 
-        public const string GmailInvalidUsername = "asdf";
-        public const string GmailInvalidPassword = "yYoq3";
+        public string GmailInvalidUsername = "asdf";
+        public string GmailInvalidPassword = "yYoq3";
 
-        public const string GmailEmptyUsername = "";
-        public const string GmailEmptyPassword = "";
+        public string GmailEmptyUsername = "";
+        public string GmailEmptyPassword = "";
 
-        public const string MailRuUsername = "norman.highground@bk.ru";
-        public static string MailRuPassword = "gT8MJ55xN3N9ppK3";
+        public string GmailValidUsername => _userData.GmailUsername;
+        public string GmailValidPassword => _userData.GmailPassword;
+
+        public string MailRuUsername => _userData.MailRuUsername;
+        public string MailRuPassword => _userData.MailRuPassword;
+
+        public UserData()
+        {
+
+        }
+
+        public void ReadJSON(bool smokeTest)
+        {
+            var jsonDirectory = smokeTest ? 
+                $"{Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.Parent}\\Properties\\UserDataSmoke.json" :
+                $"{Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.Parent}\\Properties\\UserData.json";
+
+            var jsonFile = File.ReadAllText(jsonDirectory);
+
+            _userData = JsonSerializer.Deserialize<User>(jsonFile);
+        }
     }
 }
