@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using OpenQA.Selenium;
+using TaskWebdriver.Logger;
 
 namespace TaskWebdriver.Test
 {
@@ -51,6 +52,7 @@ namespace TaskWebdriver.Test
             }
 
             DriverInstance.CloseBrowser();
+            TestLogger.LoggerShutDown();
         }
 
         [Test, Category("SmokeTests"), Category("AllTests")]

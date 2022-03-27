@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using NUnit.Framework;
 using OpenQA.Selenium;
+using TaskWebdriver.Logger;
 
 namespace TaskWebdriver.Utilities
 {
@@ -20,17 +21,31 @@ namespace TaskWebdriver.Utilities
 
         public static void TakeScreenShot(IWebDriver driver)
         {
-            Screenshot screenshot = (driver as ITakesScreenshot).GetScreenshot();
-            screenshot.SaveAsFile($"{Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.Parent}\\Screenshots\\{TestContext.CurrentContext.Test.Name}_{DateTime.Now.ToString("dd-MM-yyyy_HH-mm-ss")}.png", ScreenshotImageFormat.Png);
+            try
+            {
+                Screenshot screenshot = (driver as ITakesScreenshot).GetScreenshot();
+                screenshot.SaveAsFile($"{Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.Parent}\\Screenshots\\{TestContext.CurrentContext.Test.Name}_{DateTime.Now.ToString("dd-MM-yyyy_HH-mm-ss")}.png", ScreenshotImageFormat.Png);
+            }
+            catch (Exception ex)
+            {
+                TestLogger.Instance.Error(ex);
+            }
         }
 
         public static void CleanFolder()
         {
-            var screenshotsList = Directory.GetFiles($"{Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.Parent}\\Screenshots");
-
-            foreach (var screenshot in screenshotsList)
+            try
             {
-                File.Delete(screenshot);
+                var screenshotsList = Directory.GetFiles($"{Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.Parent}\\Screenshots");
+
+                foreach (var screenshot in screenshotsList)
+                {
+                    File.Delete(screenshot);
+                }
+            }
+            catch (Exception ex)
+            {
+                TestLogger.Instance.Error(ex);
             }
         }
     }

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using TaskWebdriver.Properties;
 using System.Threading;
+using TaskWebdriver.Logger;
 
 namespace TaskWebdriver.Pages
 {
@@ -38,6 +39,8 @@ namespace TaskWebdriver.Pages
 
         public void Login(string username, string password)
         {
+            TestLogger.Instance.Info("Logging in Gmail");
+
             var inputLogin = _driver.FindElement(_inputLogin);
             inputLogin.SendKeys(username);
 

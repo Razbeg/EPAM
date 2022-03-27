@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using TaskWebdriver.Logger;
 using TaskWebdriver.Utilities;
 
 namespace TaskWebdriver.Pages
@@ -37,6 +38,8 @@ namespace TaskWebdriver.Pages
 
         public void Login(string username, string password)
         {
+            TestLogger.Instance.Info("Logging in MailRu");
+
             _driver.FindElement(_login).Click();
             _driver.SwitchTo().Frame(_driver.FindElement(_loginIFrame));
 
@@ -55,6 +58,8 @@ namespace TaskWebdriver.Pages
 
         public void CheckMail()
         {
+            TestLogger.Instance.Info("Checking email from sender");
+
             _driver.SwitchTo().Window(_driver.WindowHandles.Last());
             _driver.FindElement(_sentMail).Click();
 

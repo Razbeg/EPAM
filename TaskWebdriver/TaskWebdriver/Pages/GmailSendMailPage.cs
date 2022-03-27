@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
+using TaskWebdriver.Logger;
 using TaskWebdriver.Utilities;
 
 namespace TaskWebdriver.Pages
@@ -24,6 +25,8 @@ namespace TaskWebdriver.Pages
 
         public void SendMailTo(string email)
         {
+            TestLogger.Instance.Info("Sending mail to");
+
             TestUtilities.Text = TestUtilities.RandomText();
 
             _driver.FindElement(_composeMail).Click();

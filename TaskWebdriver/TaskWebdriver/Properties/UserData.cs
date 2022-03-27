@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Text.Json;
+using TaskWebdriver.Logger;
 
 namespace TaskWebdriver.Properties
 {
@@ -29,13 +30,20 @@ namespace TaskWebdriver.Properties
 
         public void ReadJSON(bool smokeTest)
         {
-            var jsonDirectory = smokeTest ? 
+            try
+            {
+                var jsonDirectory = smokeTest ?
                 $"{Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.Parent}\\Properties\\UserDataSmoke.json" :
                 $"{Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.Parent}\\Properties\\UserData.json";
 
-            var jsonFile = File.ReadAllText(jsonDirectory);
+                var jsonFile = File.ReadAllText(jsonDirectory);
 
-            _userData = JsonSerializer.Deserialize<User>(jsonFile);
+                _userData = JsonSerializer.Deserialize<User>(jsonFile);
+            }
+            catch (Exception ex)
+            {
+                TestLogger.Instance.Error(ex);
+            }
         }
     }
 }

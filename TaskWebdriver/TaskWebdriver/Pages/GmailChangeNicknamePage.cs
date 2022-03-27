@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using TaskWebdriver.Logger;
 using TaskWebdriver.Properties;
 using TaskWebdriver.Utilities;
 
@@ -42,6 +43,8 @@ namespace TaskWebdriver.Pages
 
         public void ChangeNickname()
         {
+            TestLogger.Instance.Info("Changing Username");
+
             _driver.FindElement(_accountsManager).Click();
             _driver.SwitchTo().Frame(_driver.FindElement(_accountsIframe));
             _driver.FindElement(_manageAccountLink).Click();
