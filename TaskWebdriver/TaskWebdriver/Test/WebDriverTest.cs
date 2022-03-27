@@ -33,14 +33,7 @@ namespace TaskWebdriver.Test
         {
             _driver = DriverInstance.GetDriver();
 
-            if (TestContext.CurrentContext.Test.Properties["Category"].Contains("SmokeTests"))
-            {
-                _userData.ReadJSON(true);
-            }
-            else
-            {
-                _userData.ReadJSON(false);
-            }
+            _userData.ReadJSON();
         }
 
         [TearDown]
@@ -55,7 +48,7 @@ namespace TaskWebdriver.Test
             TestLogger.LoggerShutDown();
         }
 
-        [Test, Category("SmokeTests"), Category("AllTests")]
+        [Test, Category("AllTests")]
         public void LoginGmailValidTest()
         {
             GmailLoginPage loginPage = new GmailLoginPage(_driver, _userData);
@@ -95,7 +88,7 @@ namespace TaskWebdriver.Test
             Assert.IsTrue(changeNicknamePage.actual.Displayed);
         }
 
-        [Test, Category("SmokeTests"), Category("AllTests")]
+        [Test, Category("AllTests")]
         public void SendMailTest()
         {
             GmailLoginPage loginPage = new GmailLoginPage(_driver, _userData);
@@ -112,33 +105,5 @@ namespace TaskWebdriver.Test
 
             Assert.IsTrue(mailRuLoginPage.sentMailText.Displayed);
         }
-        /*
-        [Test, Category("SmokeTests")]
-        public void SendMailSmokeTest()
-        {
-            GmailLoginPage loginPage = new GmailLoginPage(_driver, _userData);
-            loginPage.OpenPage();
-            loginPage.Login(_userData.GmailValidUsername, _userData.GmailValidPassword);
-
-            GmailSendMailPage sendMailPage = new GmailSendMailPage(_driver);
-            sendMailPage.SendMailTo(_userData.MailRuUsername);
-
-            MailRuPage mailRuLoginPage = new MailRuPage(_driver);
-            mailRuLoginPage.OpenPage();
-            mailRuLoginPage.Login(_userData.MailRuUsername, _userData.MailRuPassword);
-            mailRuLoginPage.CheckMail();
-
-            Assert.IsTrue(mailRuLoginPage.sentMailText.Displayed);
-        }
-
-        [Test, Category("SmokeTests")]
-        public void LoginGmailValidSmokeTest()
-        {
-            GmailLoginPage loginPage = new GmailLoginPage(_driver, _userData);
-            loginPage.OpenPage();
-            loginPage.Login(_userData.GmailValidUsername, _userData.GmailValidPassword);
-
-            Assert.IsTrue(loginPage.checkLogin.Displayed);
-        }*/
     }
 }

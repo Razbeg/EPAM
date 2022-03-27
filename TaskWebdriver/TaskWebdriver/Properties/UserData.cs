@@ -28,22 +28,39 @@ namespace TaskWebdriver.Properties
 
         }
 
-        public void ReadJSON(bool smokeTest)
+        public void ReadSmokeJSON()
         {
             try
             {
-                var jsonDirectory = smokeTest ?
-                $"{Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.Parent}\\Properties\\UserDataSmoke.json" :
-                $"{Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.Parent}\\Properties\\UserData.json";
+                var jsonDirectory = $"{Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.Parent}\\Properties\\UserDataSmoke.json";
 
-                var jsonFile = File.ReadAllText(jsonDirectory);
-
-                _userData = JsonSerializer.Deserialize<User>(jsonFile);
+                ReadJSONFile(jsonDirectory);
             }
             catch (Exception ex)
             {
                 TestLogger.Instance.Error(ex);
             }
+        }
+
+        public void ReadJSON()
+        {
+            try
+            {
+                var jsonDirectory = $"{Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.Parent}\\Properties\\UserData.json";
+
+                ReadJSONFile(jsonDirectory);
+            }
+            catch (Exception ex)
+            {
+                TestLogger.Instance.Error(ex);
+            }
+        }
+
+        private void ReadJSONFile(string jsonDirectory)
+        {
+            var jsonFile = File.ReadAllText(jsonDirectory);
+
+            _userData = JsonSerializer.Deserialize<User>(jsonFile);
         }
     }
 }
